@@ -1,0 +1,74 @@
+---
+layout: default
+title: Blog
+---
+
+<h2>Blog</h2>
+
+{% if site.posts.size == 0 %}
+<p>No posts yet.</p>
+{% else %}
+
+<div id="posts-container">
+  {% for post in site.posts %}
+  <div class="post-entry">
+    <h3><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
+    <p class="post-date">{{ post.date | date: "%Y-%m-%d" }}</p>
+    {% if post.description %}
+    <p class="post-desc">{{ post.description }}</p>
+    {% endif %}
+    <hr>
+  </div>
+  {% endfor %}
+</div>
+
+<div id="pagination-controls"></div>
+
+<script>
+(function () {
+  var PER_PAGE = 10;
+  var entries = Array.from(document.querySelectorAll('.post-entry'));
+  var total = entries.length;
+  if (total === 0) return;
+
+  var totalPages = Math.ceil(total / PER_PAGE);
+  var currentPage = 1;
+
+  function showPage(page) {
+    currentPage = page;
+    var start = (page - 1) * PER_PAGE;
+    var end = start + PER_PAGE;
+    entries.forEach(function (el, i) {
+      el.style.display = (i >= start && i < end) ? 'block' : 'none';
+    });
+    renderPagination();
+    window.scrollTo(0, 0);
+  }
+
+  function renderPagination() {
+    if (totalPages <= 1) return;
+    var ctrl = document.getElementById('pagination-controls');
+    var html = '<div class="pagination">';
+    if (currentPage > 1) {
+      html += '<button onclick="goPage(' + (currentPage - 1) + ')">&laquo; prev</button> ';
+    }
+    for (var i = 1; i <= totalPages; i++) {
+      if (i === currentPage) {
+        html += '<span class="page-current">[' + i + ']</span>';
+      } else {
+        html += '<button onclick="goPage(' + i + ')">' + i + '</button> ';
+      }
+    }
+    if (currentPage < totalPages) {
+      html += ' <button onclick="goPage(' + (currentPage + 1) + ')">next &raquo;</button>';
+    }
+    html += '</div>';
+    ctrl.innerHTML = html;
+  }
+
+  window.goPage = showPage;
+  showPage(1);
+}());
+</script>
+
+{% endif %}

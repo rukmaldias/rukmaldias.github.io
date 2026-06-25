@@ -1,0 +1,423 @@
+/* Catppuccin Mocha palette
+   base:     #1e1e2e   mantle:   #181825   crust:    #11111b
+   surface0: #313244   surface1: #45475a   surface2: #585b70
+   overlay0: #6c7086   overlay1: #7f849c   overlay2: #9399b2
+   subtext0: #a6adc8   subtext1: #bac2de   text:     #cdd6f4
+   mauve:    #cba6f7   blue:     #89b4fa   lavender: #b4befe
+   teal:     #94e2d5   sky:      #89dceb   sapphire: #74c7ec
+   green:    #a6e3a1   yellow:   #f9e2af   peach:    #fab387
+   red:      #f38ba8   pink:     #f5c2e7   rosewater:#f5e0dc
+*/
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: #1e1e2e;
+  color: #cdd6f4;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 15px;
+  line-height: 1.75;
+}
+
+a {
+  color: #89b4fa;
+  text-decoration: underline;
+}
+
+a:hover {
+  color: #b4befe;
+}
+
+a:visited {
+  color: #cba6f7;
+}
+
+#wrapper {
+  max-width: 880px;
+  margin: 0 auto;
+  border-left: 1px solid #11111b;
+  border-right: 1px solid #11111b;
+  min-height: 100vh;
+}
+
+/* ── Header ─────────────────────────────── */
+#header {
+  padding: 22px 28px 18px;
+  background: #181825;
+  border-bottom: 2px solid #11111b;
+}
+
+#site-title {
+  font-size: 23px;
+  font-weight: bold;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+}
+
+#site-title a {
+  color: #cba6f7;
+  text-decoration: none;
+}
+
+#site-title a:hover {
+  color: #f5c2e7;
+}
+
+#site-desc {
+  font-size: 12px;
+  color: #6c7086;
+  margin-top: 6px;
+  letter-spacing: 2px;
+}
+
+/* ── Navigation ─────────────────────────── */
+#nav {
+  background: #181825;
+  padding: 9px 28px;
+  border-bottom: 1px solid #11111b;
+  font-size: 14px;
+  letter-spacing: 1px;
+}
+
+#nav a {
+  color: #89b4fa;
+  text-decoration: none;
+}
+
+#nav a:hover {
+  color: #b4befe;
+  text-decoration: underline;
+}
+
+#nav a.active {
+  color: #cba6f7;
+  font-weight: bold;
+}
+
+#nav a:visited {
+  color: #89b4fa;
+}
+
+#nav a.active:visited {
+  color: #cba6f7;
+}
+
+#nav .sep {
+  color: #313244;
+  margin: 0 10px;
+}
+
+/* ── Main content ───────────────────────── */
+#main {
+  padding: 30px 32px;
+  min-height: calc(100vh - 165px);
+  background: #1e1e2e;
+}
+
+/* ── Footer ─────────────────────────────── */
+#footer {
+  border-top: 1px solid #11111b;
+  padding: 13px 28px;
+  font-size: 13px;
+  color: #6c7086;
+  background: #181825;
+}
+
+/* ── Typography ─────────────────────────── */
+h1 {
+  color: #cba6f7;
+  font-weight: bold;
+  font-size: 21px;
+  margin-bottom: 18px;
+}
+
+h2 {
+  color: #89b4fa;
+  font-weight: bold;
+  font-size: 19px;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #313244;
+  padding-bottom: 7px;
+}
+
+h3 {
+  color: #94e2d5;
+  font-weight: bold;
+  font-size: 16px;
+  margin-bottom: 9px;
+}
+
+h4 {
+  color: #cdd6f4;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+p { margin-bottom: 13px; }
+
+hr {
+  border: none;
+  border-top: 1px solid #313244;
+  margin: 15px 0;
+}
+
+ul, ol {
+  margin-left: 24px;
+  margin-bottom: 13px;
+}
+
+li { margin-bottom: 5px; }
+
+/* ── About page ─────────────────────────── */
+.about-grid {
+  display: flex;
+  gap: 30px;
+  align-items: flex-start;
+  margin-bottom: 26px;
+}
+
+.about-img {
+  flex-shrink: 0;
+}
+
+.profile-img {
+  width: 115px;
+  height: 115px;
+  object-fit: cover;
+  border: 2px solid #cba6f7;
+  display: block;
+}
+
+.about-text h2 {
+  border: none;
+  padding: 0;
+  margin-bottom: 9px;
+}
+
+.about-links {
+  margin-top: 17px;
+  font-size: 14px;
+}
+
+.about-links a {
+  margin-right: 18px;
+}
+
+/* ── Blog listing ───────────────────────── */
+.post-entry {
+  margin-bottom: 4px;
+}
+
+.post-entry h3 {
+  margin-bottom: 3px;
+  font-size: 15px;
+}
+
+.post-date {
+  font-size: 13px;
+  color: #6c7086;
+  margin-bottom: 6px;
+}
+
+.post-desc {
+  color: #7f849c;
+  margin-bottom: 9px;
+  font-size: 14px;
+}
+
+/* ── Pagination ─────────────────────────── */
+.pagination {
+  margin-top: 16px;
+  font-size: 14px;
+}
+
+.pagination button {
+  background: #181825;
+  color: #89b4fa;
+  border: 1px solid #313244;
+  padding: 4px 10px;
+  cursor: pointer;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 13px;
+  margin-right: 5px;
+  margin-bottom: 5px;
+}
+
+.pagination button:hover {
+  background: #313244;
+  color: #cba6f7;
+  border-color: #45475a;
+}
+
+.page-current {
+  color: #cba6f7;
+  font-weight: bold;
+  margin-right: 5px;
+  display: inline-block;
+}
+
+/* ── Single post ────────────────────────── */
+.post h1 {
+  margin-bottom: 6px;
+}
+
+.post-meta {
+  font-size: 13px;
+  color: #6c7086;
+  margin-bottom: 0;
+}
+
+.post-content {
+  margin-top: 24px;
+}
+
+.post-content p {
+  margin-bottom: 15px;
+}
+
+.post-content h2,
+.post-content h3 {
+  margin-top: 24px;
+}
+
+.post-content pre {
+  background: #181825;
+  border: 1px solid #313244;
+  border-left: 3px solid #89b4fa;
+  padding: 13px 16px;
+  overflow-x: auto;
+  margin-bottom: 15px;
+  font-size: 14px;
+  color: #a6e3a1;
+}
+
+.post-content code {
+  background: #313244;
+  border: 1px solid #45475a;
+  padding: 1px 6px;
+  font-size: 14px;
+  color: #a6e3a1;
+}
+
+.post-content pre code {
+  border: none;
+  padding: 0;
+  background: transparent;
+}
+
+.post-content blockquote {
+  border-left: 3px solid #cba6f7;
+  background: #313244;
+  padding: 11px 18px;
+  color: #bac2de;
+  margin: 15px 0;
+}
+
+/* ── Repositories ───────────────────────── */
+.repo-entry {
+  margin-bottom: 4px;
+}
+
+.repo-entry h3 {
+  font-size: 15px;
+  margin-bottom: 4px;
+  color: #89b4fa;
+}
+
+.repo-desc {
+  color: #7f849c;
+  margin-bottom: 7px;
+  font-size: 14px;
+}
+
+.repo-meta {
+  font-size: 13px;
+  color: #6c7086;
+  margin-bottom: 11px;
+}
+
+.repo-lang { color: #a6e3a1; }
+.repo-fork { color: #6c7086; }
+
+.page-note {
+  color: #6c7086;
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+/* ── Resume ─────────────────────────────── */
+.resume-section {
+  margin-bottom: 30px;
+}
+
+.resume-section h3 {
+  color: #cba6f7;
+  font-size: 13px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #313244;
+  padding-bottom: 6px;
+}
+
+.resume-entry {
+  margin-bottom: 20px;
+}
+
+.resume-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-bottom: 3px;
+}
+
+.resume-title {
+  color: #cdd6f4;
+  font-weight: bold;
+}
+
+.resume-period {
+  font-size: 13px;
+  color: #6c7086;
+  flex-shrink: 0;
+}
+
+.resume-org {
+  color: #89b4fa;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.resume-skills-label {
+  font-size: 12px;
+  color: #6c7086;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
+.resume-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+}
+
+.skill-tag {
+  background: #313244;
+  border: 1px solid #45475a;
+  padding: 3px 10px;
+  font-size: 13px;
+  color: #cdd6f4;
+}
+
+.resume-download {
+  margin-bottom: 22px;
+  font-size: 14px;
+  color: #6c7086;
+}

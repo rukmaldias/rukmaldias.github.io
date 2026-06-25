@@ -1,0 +1,73 @@
+---
+layout: default
+title: Repositories
+---
+
+<h2>Repositories</h2>
+
+<p class="page-note">
+  Selected repositories from
+  <a href="https://github.com/{{ site.github_username }}">github.com/{{ site.github_username }}</a>.
+</p>
+
+<div id="repos-container"><p>Loading&hellip;</p></div>
+
+<script>
+var SELECTED = {{ site.data.selected_repos | jsonify }};
+var USER = "{{ site.github_username }}";
+
+fetch('https://api.github.com/users/' + USER + '/repos?per_page=100&sort=updated')
+  .then(function (r) {
+    if (!r.ok) throw new Error('GitHub API error: ' + r.status);
+    return r.json();
+  })
+  .then(function (repos) {
+    var container = document.getElementById('repos-container');
+
+    var selected = repos.filter(function (r) {
+      return SELECTED.indexOf(r.name) !== -1;
+    });
+
+    selected.sort(function (a, b) {
+      return SELECTED.indexOf(a.name) - SELECTED.indexOf(b.name);
+    });
+
+    if (selected.length === 0) {
+      container.innerHTML = '<p>No matching repositories found. Check <code>_data/selected_repos.yml</code>.</p>';
+      return;
+    }
+
+    var html = '';
+    selected.forEach(function (repo) {
+      html += '<div class="repo-entry">';
+      html += '<h3><a href="' + repo.html_url + '">' + repo.name + '</a></h3>';
+      if (repo.description) {
+        html += '<p class="repo-desc">' + escapeHtml(repo.description) + '</p>';
+      }
+      html += '<p class="repo-meta">';
+      if (repo.language) {
+        html += '<span class="repo-lang">' + escapeHtml(repo.language) + '</span>&nbsp;&nbsp;';
+      }
+      html += '&#9733; ' + repo.stargazers_count;
+      if (repo.fork) {
+        html += '&nbsp;&nbsp;<span class="repo-fork">fork</span>';
+      }
+      html += '</p>';
+      html += '<hr>';
+      html += '</div>';
+    });
+    container.innerHTML = html;
+  })
+  .catch(function (err) {
+    document.getElementById('repos-container').innerHTML =
+      '<p>Failed to load repositories. ' + escapeHtml(err.message) + '</p>';
+  });
+
+function escapeHtml(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+</script>

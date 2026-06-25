@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% if page.title and page.title != "About" %}{{ page.title }} — {% endif %}{{ site.title }}</title>
+  <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+</head>
+<body>
+  <div id="wrapper">
+
+    <div id="header">
+      <div id="site-title"><a href="{{ '/' | relative_url }}">{{ site.title }}</a></div>
+      <div id="site-desc">{{ site.description }}</div>
+    </div>
+
+    <div id="nav">
+      <a href="{{ '/' | relative_url }}"{% if page.url == "/" %} class="active"{% endif %}>about</a>
+      <span class="sep">|</span>
+      <a href="{{ '/blog' | relative_url }}"{% if page.url contains "blog" %} class="active"{% endif %}>blog</a>
+      <span class="sep">|</span>
+      <a href="{{ '/repositories' | relative_url }}"{% if page.url contains "repositories" %} class="active"{% endif %}>repositories</a>
+      <span class="sep">|</span>
+      <a href="{{ '/resume' | relative_url }}"{% if page.url contains "resume" %} class="active"{% endif %}>resume</a>
+    </div>
+
+    <div id="main">
+      {{ content }}
+    </div>
+
+    <div id="footer">
+      &copy; {{ 'now' | date: "%Y" }} {{ site.author }} &mdash;
+      <a href="https://github.com/{{ site.github_username }}">github.com/{{ site.github_username }}</a>
+    </div>
+
+  </div>
+</body>
+</html>
