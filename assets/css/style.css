@@ -309,6 +309,12 @@ li { margin-bottom: 5px; }
   background: transparent;
 }
 
+.post-content img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
 .post-content blockquote {
   border-left: 3px solid #cba6f7;
   background: #313244;
