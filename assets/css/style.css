@@ -273,6 +273,7 @@ li { margin-bottom: 5px; }
 
 .post-content {
   margin-top: 24px;
+  overflow-x: hidden;
 }
 
 .post-content p {
@@ -310,6 +311,7 @@ li { margin-bottom: 5px; }
 }
 
 .post-content img {
+  max-width: 100%;
   width: 100%;
   height: auto;
   display: block;
