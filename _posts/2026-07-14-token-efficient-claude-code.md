@@ -203,7 +203,7 @@ This takes 30 seconds to a few minutes depending on repo size. Output lands in `
 For daily updates on changed files only:
 
 ```shell
-graphify --update
+graphify update .
 ```
 
 Fast, minimal token cost. Consider installing a git post-commit hook so this runs automatically:
@@ -446,14 +446,14 @@ Numbers are one measure. Also notice: do you still find yourself pasting file co
 
 ## Ongoing Maintenance
 
-**Weekly** — run `graphify --update` if you haven't installed the git hook, review `/context` and `/usage`, delete stale mem0 entries (memories going stale silently is a known failure mode; the `update_memory` rule helps but isn't perfect).
+**Weekly** — run `graphify update .` if you haven't installed the git hook, review `/context` and `/usage`, delete stale mem0 entries (memories going stale silently is a known failure mode; the `update_memory` rule helps but isn't perfect).
 
 **Monthly** — reinstall the mem0 server with `uvx --refresh` to pick up upstream fixes (careful, this may reintroduce the mem0ai version drift issue — re-verify with the three end-to-end tests). Prune `~/qdrant_storage/` if it grows large. Review CLAUDE.md for rules you never see fire.
 
 **When something breaks**, two failure modes are most likely:
 
 1. **mem0 MCP fails to connect after a system update** — almost always PATH or Python version drift. Debug by verifying prerequisites (`curl` Qdrant and Ollama, `which uvx`), then running the server standalone to see the real error.
-2. **Graphify gives stale answers** — you forgot to `--update` after a big refactor. Rebuild from scratch with `graphify . --force`.
+2. **Graphify gives stale answers** — you forgot to run `graphify update .` after a big refactor. If a refactor deleted code, the rebuild can end up with fewer nodes than the existing graph, which is guarded against by default; `graphify update . --force` overwrites it anyway.
 
 ---
 
