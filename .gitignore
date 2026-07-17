@@ -6,3 +6,12 @@ vendor/
 Gemfile.lock
 .bundle/
 bin/
+graphify-out/
+
+# OS cruft
+.DS_Store
+
+# AI assistant config / local tooling
+.claude/
+.claudeignore
+CLAUDE.md
