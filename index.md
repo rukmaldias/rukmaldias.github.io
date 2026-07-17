@@ -10,15 +10,19 @@ title: About
   <div class="about-text">
     <h2>Rukmal Dias</h2>
     <p>
-      Senior Android engineer based in Singapore, with 15+ years building mobile
-      applications, security SDKs, and native systems. I work at the intersection
-      of mobile and low-level security &mdash; cryptographic protocols, threat
-      modelling, and writing Rust for native Android environments.
+      Senior software engineer based in Singapore, with 15+ years across mobile,
+      backend, and web systems. Deep foundation in Android and native security
+      engineering &mdash; cryptographic protocols, threat modelling, and shipping
+      SDKs for regulated fintech and government platforms.
     </p>
     <p>
-      Interested in AI-assisted development and distributed computing, both as
-      tools that shape how software is built and as problems worth understanding
-      deeply.
+      Building on that foundation across the full stack: React.js and Node.js on
+      the front-end, Java and Spring Boot on the back-end, and PostgreSQL for
+      data &mdash; connected end-to-end through Git, Jenkins CI/CD, and Docker.
+      Actively working with AI-assisted development tools (GitHub Copilot,
+      Claude, ChatGPT) as part of daily engineering practice, and interested in
+      distributed computing and Rust for systems-level problems worth
+      understanding deeply.
     </p>
     <div class="about-links">
       <a href="https://github.com/rukmaldias">github</a>
