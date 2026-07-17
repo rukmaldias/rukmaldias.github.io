@@ -357,6 +357,146 @@ li { margin-bottom: 5px; }
   margin-bottom: 20px;
 }
 
+/* ── Contributions calendar ─────────────── */
+
+/* Warm ramp, dark to bright. On a dark background intensity has to read as
+   brightness, so the quietest days sit nearest the panel and the busiest
+   land on Catppuccin's own peach and yellow -- the palette this site
+   already uses, rather than two new colors bolted onto it. Change these
+   five and the grid, legend and hover all follow. */
+.contrib-panel {
+  --cc-0: #313244;  /* surface0 -- no contributions */
+  --cc-1: #6e4b1e;  /* deep amber */
+  --cc-2: #c9853a;  /* orange */
+  --cc-3: #fab387;  /* peach -- light orange */
+  --cc-4: #f9e2af;  /* yellow -- light yellow */
+  /* 53 weeks * 14px = 742px, which fills the ~756px left inside #main once
+     the panel padding and the weekday labels are taken out. Shrink --cc-size
+     and the whole grid, month row and legend scale with it. */
+  --cc-size: 14px;  /* one column: cell + gap */
+  --cc-cell: 11px;
+  /* Height of the month-label row. The weekday labels sit in a separate
+     column that starts at the top of the panel, above where the grid
+     starts, so they must be pushed down by exactly this much or every
+     label names the wrong day. Shared by both rules below so the two can't
+     drift apart. */
+  --cc-monthrow: 16px;
+
+  background: #181825;
+  border: 1px solid #11111b;
+  padding: 14px 16px 12px;
+  margin-bottom: 28px;
+}
+
+/* The grid is a fixed ~53 columns wide, so on a narrow viewport it scrolls
+   here rather than stretching the page. */
+.contrib-scroll {
+  overflow-x: auto;
+}
+
+.contrib-body {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+/* Mon/Wed/Fri only, matching GitHub -- seven labels at this cell size would
+   collide. Spaced to line up with rows 2, 4 and 6. */
+.contrib-days {
+  display: grid;
+  grid-template-rows: repeat(7, var(--cc-size));
+  font-size: 9px;
+  color: #6c7086;
+  /* Clears the month row, so row 1 here lines up with row 1 of the grid
+     (Sunday) and the labels below land on the days they name. */
+  padding-top: var(--cc-monthrow);
+}
+
+.contrib-days span:nth-child(1) { grid-row: 2; }
+.contrib-days span:nth-child(2) { grid-row: 4; }
+.contrib-days span:nth-child(3) { grid-row: 6; }
+
+.contrib-cols {
+  display: flex;
+  flex-direction: column;
+}
+
+.contrib-months {
+  display: grid;
+  font-size: 10px;
+  line-height: 1;
+  color: #6c7086;
+  height: var(--cc-monthrow);
+  /* A label is wider than the 14px week it sits on, so it deliberately
+     overflows to the right -- as GitHub's does. Months are >=3 columns
+     apart here, so they never collide. */
+  white-space: nowrap;
+}
+
+/* Column-flow is what makes each column a week: cells fill top-to-bottom
+   through the 7 rows before starting the next column. */
+.contrib-grid {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-rows: repeat(7, var(--cc-size));
+  grid-auto-columns: var(--cc-size);
+}
+
+.contrib-cell {
+  width: var(--cc-cell);
+  height: var(--cc-cell);
+  border-radius: 2px;
+  background: var(--cc-0);
+  display: block;
+}
+
+.contrib-cell[data-level="1"] { background: var(--cc-1); }
+.contrib-cell[data-level="2"] { background: var(--cc-2); }
+.contrib-cell[data-level="3"] { background: var(--cc-3); }
+.contrib-cell[data-level="4"] { background: var(--cc-4); }
+
+/* Leading slots before the first real date -- they hold the grid's shape
+   without pretending to be days with no activity. */
+.contrib-cell--empty {
+  background: transparent;
+}
+
+.contrib-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-top: 10px;
+  font-size: 12px;
+  color: #6c7086;
+}
+
+.contrib-legend {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.contrib-legend .contrib-cell {
+  display: inline-block;
+}
+
+.contrib-legend .contrib-cell:first-of-type {
+  margin-left: 4px;
+}
+
+.contrib-legend .contrib-cell:last-of-type {
+  margin-right: 4px;
+}
+
+@media (max-width: 600px) {
+  .contrib-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+}
+
 /* ── Resume ─────────────────────────────── */
 .resume-section {
   margin-bottom: 30px;

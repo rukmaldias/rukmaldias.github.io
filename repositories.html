@@ -10,11 +10,119 @@ title: Repositories
   <a href="https://github.com/{{ site.github_username }}">github.com/{{ site.github_username }}</a>.
 </p>
 
+<div id="contrib-panel" class="contrib-panel" hidden>
+  <div class="contrib-scroll">
+    <div class="contrib-body">
+      <div class="contrib-days" aria-hidden="true">
+        <span>Mon</span><span>Wed</span><span>Fri</span>
+      </div>
+      <!-- Months and grid share a column so the labels line up with the
+           weeks by construction, rather than by guessing the width of the
+           weekday labels to their left. -->
+      <div class="contrib-cols">
+        <div class="contrib-months" id="contrib-months" aria-hidden="true"></div>
+        <div class="contrib-grid" id="contrib-grid"></div>
+      </div>
+    </div>
+  </div>
+  <div class="contrib-footer">
+    <span id="contrib-total" class="contrib-total"></span>
+    <span class="contrib-legend">
+      Less
+      <i class="contrib-cell" data-level="0"></i>
+      <i class="contrib-cell" data-level="1"></i>
+      <i class="contrib-cell" data-level="2"></i>
+      <i class="contrib-cell" data-level="3"></i>
+      <i class="contrib-cell" data-level="4"></i>
+      More
+    </span>
+  </div>
+</div>
+
 <div id="repos-container"><p>Loading&hellip;</p></div>
 
 <script>
 var SELECTED = {{ site.data.selected_repos | jsonify }};
 var USER = "{{ site.github_username }}";
+
+/* Contributions calendar.
+   GitHub's REST API doesn't expose contribution counts -- only the GraphQL
+   API does, and that needs a token, which can't live in a public static
+   site. This uses a CORS-enabled public proxy over that GraphQL endpoint
+   instead. It's a third-party runtime dependency, so every failure path
+   below just hides the panel: the page's real content is the repo list. */
+(function () {
+  var MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+  function build(data) {
+    var days = data.contributions || [];
+    if (!days.length) return;
+
+    var grid = document.getElementById("contrib-grid");
+    var monthsRow = document.getElementById("contrib-months");
+
+    // The grid flows top-to-bottom then left-to-right (see .contrib-grid),
+    // so each column is one week, Sunday first. The first date is rarely a
+    // Sunday, so pad the leading slots to keep every row on one weekday.
+    var lead = new Date(days[0].date + "T00:00:00").getDay();
+    var i;
+    for (i = 0; i < lead; i++) {
+      var spacer = document.createElement("i");
+      spacer.className = "contrib-cell contrib-cell--empty";
+      grid.appendChild(spacer);
+    }
+
+    days.forEach(function (day) {
+      var cell = document.createElement("i");
+      cell.className = "contrib-cell";
+      cell.setAttribute("data-level", day.level);
+      cell.title = day.count + (day.count === 1 ? " contribution" : " contributions") +
+                   " on " + day.date;
+      grid.appendChild(cell);
+    });
+
+    // Month labels sit on a grid with the same column count, so a label
+    // lands over the week its month starts in rather than being spaced by
+    // guesswork.
+    var weeks = Math.ceil((lead + days.length) / 7);
+    monthsRow.style.gridTemplateColumns = "repeat(" + weeks + ", var(--cc-size))";
+
+    var seen = -1;
+    for (i = 0; i < weeks; i++) {
+      var label = document.createElement("span");
+      // First real day in this column: index (i * 7) counts the padding.
+      var idx = i * 7 - lead;
+      if (idx < 0) idx = 0;
+      if (idx < days.length) {
+        var month = new Date(days[idx].date + "T00:00:00").getMonth();
+        // Only label a month the first time it appears, and never in the
+        // final partial week, where the text would overflow the panel.
+        if (month !== seen && i < weeks - 1) {
+          label.textContent = MONTHS[month];
+          seen = month;
+        }
+      }
+      monthsRow.appendChild(label);
+    }
+
+    var total = (data.total && data.total.lastYear) || 0;
+    document.getElementById("contrib-total").textContent =
+      total.toLocaleString() + " contributions in the last year";
+
+    document.getElementById("contrib-panel").hidden = false;
+  }
+
+  fetch("https://github-contributions-api.jogruber.de/v4/" + USER + "?y=last")
+    .then(function (r) {
+      if (!r.ok) throw new Error(r.status);
+      return r.json();
+    })
+    .then(build)
+    .catch(function () {
+      /* Leave the panel hidden -- a missing chart beats a broken one. */
+    });
+})();
 
 fetch('https://api.github.com/users/' + USER + '/repos?per_page=100&sort=updated')
   .then(function (r) {
